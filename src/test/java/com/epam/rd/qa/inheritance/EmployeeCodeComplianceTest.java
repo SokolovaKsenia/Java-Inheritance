@@ -46,8 +46,8 @@ class EmployeeCodeComplianceTest {
                         && f.getType() == BigDecimal.class)
                 .findAny();
         assertTrue(bonusField.isPresent(), "'bonus' must be private " +
-                "because 'setBonus()' must be overridden due to specification. " +
-                "It must has type 'BigDecimal' because its money");
+                "because 'setBonus()' must be overridden due the specification. " +
+                "It must has type 'BigDecimal' because it's money");
 
         Method[] declaredMethods = employeeClass.getDeclaredMethods();
         Optional<Method> getName = Arrays.stream(declaredMethods)
@@ -88,14 +88,14 @@ class EmployeeCodeComplianceTest {
                 .filter(f -> Modifier.isPublic(f.getModifiers()))
                 .findAny();
         assertFalse(getBonus.isPresent(), "The public method 'getBonus' " +
-                "must not be present due to specification");
+                "must not be present due the specification");
 
         Optional<Method> toPay = Arrays.stream(declaredMethods)
                 .filter(f -> f.getName().equals("toPay"))
                 .filter(f -> Modifier.isPublic(f.getModifiers()))
                 .findAny();
         assertTrue(toPay.isPresent(), "The public method 'toPay' " +
-                "must be present due to specification");
+                "must be present due the specification");
     }
 
     @Test

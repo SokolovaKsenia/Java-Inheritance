@@ -25,7 +25,6 @@ class EmployeeTest {
     @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/casesConstructorShouldThrow.csv", delimiterString = ",")
     void testConstructorShouldThrow(String className, String name, String salary, String param) {
-        System.out.println(className + ", '" + name + "', " + salary + ", " + param);
         assertThrows(IllegalArgumentException.class, () -> map.get(className)
                 .execute(name, salary == null ? null : new BigDecimal(salary),
                         param == null ? 0 : Integer.parseInt(param)));
@@ -34,7 +33,6 @@ class EmployeeTest {
     @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/casesConstructorShouldCreate.csv", delimiterString = ",")
     void testConstructorShouldCreate(String className, String name, String salary, String bonus) {
-        System.out.println(className + ", '" + name + "', " + salary + ", " + bonus);
         assertDoesNotThrow(() -> map.get(className)
                 .execute(name, salary == null ? null : new BigDecimal(salary),
                         bonus == null ? 0 : Integer.parseInt(bonus)));
@@ -42,11 +40,17 @@ class EmployeeTest {
 
     @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/casesToPay.csv", delimiterString = ",")
-    void toPay(String className, String name, String salary, String param, String bonus, String expected) {
-        System.out.println(className + ", '" + name + "', " + salary + ", "+ param + ", " + bonus + ", "+ expected);
+    void testToPay(String className, String name, String salary, String param, String bonus, String expected) {
         Employee e = map.get(className).execute(name, new BigDecimal(salary), Integer.parseInt(param));
         e.setBonus(new BigDecimal(bonus));
         assertEquals(new BigDecimal(expected), e.toPay());
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/casesSetBonus.csv", delimiterString = ",")
+    void testSetBonusShouldThrow(String className, String name, String salary, String param, String bonus, String expected) {
+        Employee e = map.get(className).execute(name, new BigDecimal(salary), Integer.parseInt(param));
+        assertThrows(IllegalArgumentException.class, () -> e.setBonus(new BigDecimal(bonus)));
     }
 
     private interface Executable {

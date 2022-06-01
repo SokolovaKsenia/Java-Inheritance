@@ -12,8 +12,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CompanyTest {
 
@@ -42,9 +41,16 @@ class CompanyTest {
         company.giveEverybodyBonus(bonus);
         BigDecimal totalToPay = company.totalToPay();
         String nameMaxSalary = company.nameMaxSalary();
-        System.out.printf("bonus: %s, expectedTotal: %s, expectedNameMaxSalary: %s", bonus, totalToPay, nameMaxSalary);
+//        System.out.printf("bonus: %s, expectedTotal: %s, expectedNameMaxSalary: %s", bonus, totalToPay, nameMaxSalary);
         assertEquals(expectedTotal, totalToPay);
         assertEquals(expectedNameMaxSalary, nameMaxSalary);
+    }
+
+    @MethodSource("casesTotalToPayThrow")
+    @ParameterizedTest
+    void testTotalToPayShouldThrow(Employee[] employees, BigDecimal bonus) {
+        Company company = new Company(employees);
+        assertThrows(IllegalArgumentException.class, () -> company.giveEverybodyBonus(bonus));
     }
 
     static Stream<Arguments> casesTotalToPay() {
@@ -64,6 +70,22 @@ class CompanyTest {
                         new BigDecimal(String.valueOf(nextInt(paramRandom, 100, 500))),
                         new BigDecimal("38144.5761043381766057791537605226039886474609375"),
                         "Manager141")
+                );
+    }
+
+    static Stream<Arguments> casesTotalToPayThrow() {
+        Random classRandom = new Random(5);
+        String[] classNames = executableMap.keySet().toArray(new String[0]);
+        Random salaryRandom = new Random(15);
+        Random paramRandom = new Random(27);
+
+        return Stream.of(
+                Arguments.of(
+                        getEmployees(classRandom, classNames, salaryRandom, paramRandom),
+                        BigDecimal.ZERO),
+                Arguments.of(
+                        getEmployees(classRandom, classNames, salaryRandom, paramRandom),
+                        BigDecimal.ONE.negate())
                 );
     }
 
