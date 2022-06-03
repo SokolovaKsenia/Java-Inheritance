@@ -50,7 +50,8 @@ class EmployeeTest {
     @CsvFileSource(files = "src/test/resources/casesSetBonus.csv", delimiterString = ",")
     void testSetBonusShouldThrow(String className, String name, String salary, String param, String bonus, String expected) {
         Employee e = map.get(className).execute(name, new BigDecimal(salary), Integer.parseInt(param));
-        assertThrows(IllegalArgumentException.class, () -> e.setBonus(new BigDecimal(bonus)));
+        BigDecimal companyBonus = bonus == null ? null : new BigDecimal(bonus);
+        assertThrows(IllegalArgumentException.class, () -> e.setBonus(companyBonus));
     }
 
     private interface Executable {

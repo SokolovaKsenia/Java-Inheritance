@@ -9,5 +9,6 @@ public class SalesPerson {
     }
 
     public void setBonus(BigDecimal bonus) {
+        throw new UnsupportedOperationException();
     }
 }
