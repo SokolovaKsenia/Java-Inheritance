@@ -19,7 +19,7 @@ Create basic class `Employee` with the following content:
 
 - Private fields: `name`, `salary` and `bonus`. 
   - `name` - must not be empty;
-  - `salary` - must be greater than or equals to zero;
+  - `salary` - must be greater than zero;
   - `bonus` - must be greater than zero;
 - Public method `getName` for reading employee’s last name
 - Public method `getSalary` for reading and recording `salary` field
