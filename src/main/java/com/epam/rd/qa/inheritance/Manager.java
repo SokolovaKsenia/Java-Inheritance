@@ -16,7 +16,7 @@ public class Manager extends Employee {
           if (clientAmount > 150) {
               super.setBonus(bonus.add(BigDecimal.valueOf(1000)));
           } else if (clientAmount > 100) {
-              super.setBonus(bonus.add(BigDecimal.valueOf(1000)));}
+              super.setBonus(bonus.add(BigDecimal.valueOf(500)));}
           else {super.setBonus(bonus);
         }
     }
