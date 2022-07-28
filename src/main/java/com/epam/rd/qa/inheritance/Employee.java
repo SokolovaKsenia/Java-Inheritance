@@ -3,16 +3,8 @@ package com.epam.rd.qa.inheritance;
 import java.math.BigDecimal;
 
 public class Employee {
-    private String name;
-    private BigDecimal salary;
-    private BigDecimal bonus;
-
-//    public String getName (String name) {
-//        if (name == null)
-//            throw new IllegalArgumentException();
-//         return name;
-//    }
-
+    private final String name;
+    private final BigDecimal salary;
     public String getName() {
         return name;
     }
@@ -20,23 +12,22 @@ public class Employee {
     public BigDecimal getSalary() {
         return salary;
     }
-
-//    public BigDecimal getSalary (BigDecimal salary) {
-//        if (salary.compareTo(BigDecimal.ZERO) < 0)  throw new IllegalArgumentException();
-//        return salary;
-//    }
-
+    private BigDecimal bonus;
     public Employee (String name, BigDecimal salary) {
+        if (name == null || name.isBlank()){
+            throw new IllegalArgumentException();     }
+        if (salary == null || salary.compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalArgumentException();     }
         this.name = name;
         this.salary = salary;
     }
 
     public void setBonus (BigDecimal bonus) {
-        if (bonus.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException();
+        if (bonus == null || bonus.compareTo(BigDecimal.ZERO) <= 0) {throw new IllegalArgumentException(); }
         this.bonus = bonus;
     }
 
     public BigDecimal toPay() {
-        return salary.add(bonus);
+        return getSalary().add(bonus);
     }
 }
